@@ -12,41 +12,53 @@ import { LuLayoutGrid } from "react-icons/lu";
 import { FiPackage } from "react-icons/fi";
 import Footer from '../Footer/Footer';
 import BookNow from './BookNow';
+import { useEffect } from 'react'
 
 export default function Product() {
+  const [getpost, setGetPost] = useState([])
   const { id } = useParams();
-  const item=data.find((item)=>item.id===id)
+  useEffect(() => {
+    const fetchpost = JSON.parse(localStorage.getItem("postdb")) || []
+   const index=parseInt(id);
+setGetPost(fetchpost[index])
+  
+  },[id])
+  console.log(getpost)
+  // const item = data.find((item) => item.id === id)
 
-  const [imageindex, setImageindex] = useState(0);
-  const handlernextimage = () => {
-    if(item?.img?.length) {
+  // const [imageindex, setImageindex] = useState(0);
+  // const handlernextimage = () => {
+  //   if (item?.img?.length) {
 
-      setImageindex((prev) => (prev + 1) % item.img.length)
-    }
+  //     setImageindex((prev) => (prev + 1) % item.img.length)
+  //   }
 
-  }
-  const handlerprevimage = () => {
-    if (item?.img?.length) {
+  // }
+  // const handlerprevimage = () => {
+  //   if (item?.img?.length) {
 
-      setImageindex((prev) => (prev - 1 + item.img.length) % item.img.length)
-    }
-  }
+  //     setImageindex((prev) => (prev - 1 + item.img.length) % item.img.length)
+  //   }
+  // }
 
 
-  if (!item || !item.img || item.img.length === 0) {
-    return <div className="p-4 text-red-600">Product not found or has no images.</div>;
-  }
+  // if (!getpost || !getpost.image || getpost.length === 0) {
+  //   return <div className="p-4 text-red-600">Product not found or has no images.</div>;
+  // }
+  
+
+
   return (
-    <div>
+    <div className=''>
       <NAvbar />
       <div className='w-full hidden md:flex items-start justify-start'>
         <div className='w-[49.5%] mt-0 text-start'>
-          <img src={item.img[0]} alt='' />
+          <img src={getpost.image} alt='' />
         </div>
         <div className='w-[50%] flex flex-wrap m-auto text-start gap-3'>
-          {item.img.map((img, i) => (
+          {/* {item.img.map((img, i) => (
             <img key={i} src={img} alt='' className='w-[48%] m-auto' />
-          ))}
+          ))} */}
         </div>
       </div>
 
@@ -56,20 +68,21 @@ export default function Product() {
       <div className='w-full flex relative z-0 md:hidden'>
         {/* {item.img.map((items, index) => ( */}
 
-          <div >
-            <img src={item.img[imageindex]} alt="image" className='flex w-full  ' />
+        <div >
+          <img src={getpost.image} alt="image" className='flex w-full  ' />
 
-            <div className='absolute bg-gray-50 rounded-full top-[50%]  right-3 flex items-center justify-center'>
-              <MdKeyboardArrowRight className='text-3xl' onClick={handlernextimage} />
+          {/* <div className='absolute bg-gray-50 rounded-full top-[50%]  right-3 flex items-center justify-center'>
+            {/* <MdKeyboardArrowRight className='text-3xl' onClick={handlernextimage} /> */}
+            {/* <MdKeyboardArrowRight className='text-3xl'  /> */}
+          {/* </div>
+          {imageindex > 0 ?
+
+
+            <div className='absolute bg-gray-50 rounded-full top-[50%]  left-3 flex items-center justify-center'>
+              <MdKeyboardArrowLeft className='text-3xl' onClick={handlerprevimage} />
             </div>
-            {imageindex > 0 ?
-
-
-              <div className='absolute bg-gray-50 rounded-full top-[50%]  left-3 flex items-center justify-center'>
-                <MdKeyboardArrowLeft className='text-3xl' onClick={handlerprevimage} />
-              </div>
-              : ''}
-          </div>
+            : ''} */} 
+        </div>
         {/* ))} */}
       </div>
       <div className='w-full flex justify-between '>
@@ -77,14 +90,14 @@ export default function Product() {
 
         <div className='w-full   md:w-[60%] px-10   mt-10 '>
           {/* {item.map((items,index)=>( */}
-            <div className='mb-5'>
-            <h1 className='font-bold text-lg'>For Rent: Modern {item.type} in {item.location}</h1>
+          <div className='mb-5'>
+            <h1 className='font-bold text-lg'>For Rent: Modern {getpost.room} in {getpost.address}</h1>
 
             <h1 className='text-sm text-[#6b7280]'>5641 KC (Urkhoven)</h1>
           </div>
           {/* ))} */}
-          
-          <h1 className='text-md font-bold md:text-xl'>€{item.price} per month</h1>
+
+          <h1 className='text-md font-bold md:text-xl'>Rs.{getpost.rent} per month</h1>
 
           <div className='flex flex-col sm:flex-row gap-3 mt-5  md:gap-4'>
             <div className='flex gap-2 items-center'>
@@ -93,7 +106,7 @@ export default function Product() {
             </div>
             <div className='flex gap-2 items-center'>
               <LuLayoutGrid size={20} />
-              <h1 className='text-sm font-light '>3 room</h1>
+              <h1 className='text-sm font-light '>{getpost.room} room</h1>
             </div>
             <div className='flex gap-2 items-center'>
               <FiPackage size={20} />
@@ -104,7 +117,7 @@ export default function Product() {
           <div className='mt-10 border-y py-5'>
             <h1 className='text-md font-bold'>Description</h1>
             <p className='py-7'>
-              {item.description}
+              {getpost.description}
             </p>
           </div>
           {/* Transfer */}
@@ -113,7 +126,7 @@ export default function Product() {
             <div className=''>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'> Rental price</h1>
-                <h1 className='w-1/2 text-sm  py-3'> €{item.price} per month</h1>
+                <h1 className='w-1/2 text-sm  py-3'> Rs.{getpost.rent} per month</h1>
               </div>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'> Offered since</h1>
@@ -183,19 +196,19 @@ export default function Product() {
             <div className=''>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'>  Number of rooms</h1>
-                <h1 className='w-1/2 text-sm py-3'> 3</h1>
+                <h1 className='w-1/2 text-sm py-3'> {getpost.room}</h1>
               </div>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'> Number of bedrooms</h1>
-                <h1 className='w-1/2 text-sm  py-3'>3</h1>
+                <h1 className='w-1/2 text-sm  py-3'>{getpost.bedroom}</h1>
               </div>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'>   Number of bathrooms</h1>
-                <h1 className='w-1/2 text-sm  py-3'>2</h1>
+                <h1 className='w-1/2 text-sm  py-3'>{getpost.bathroom}</h1>
               </div>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'> Number of floors</h1>
-                <h1 className='w-1/2 text-sm  py-3'> 3</h1>
+                <h1 className='w-1/2 text-sm  py-3'> {getpost.floors}</h1>
               </div>
             </div>
           </div>
@@ -283,11 +296,11 @@ export default function Product() {
             <div className=''>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'>Present</h1>
-                <h1 className='w-1/2 text-sm py-3'>Yes</h1>
+                <h1 className='w-1/2 text-sm py-3'>{getpost.parking}</h1>
               </div>
               <div className='w-full flex  items-center border-b border-[#e5e7eb]'>
                 <h1 className='w-1/2 text-light  py-3'> Type of parking</h1>
-                <h1 className='w-1/2 text-sm  py-3'>Public</h1>
+                <h1 className='w-1/2 text-sm  py-3'>{getpost.toparking}</h1>
               </div>
 
             </div>
@@ -296,7 +309,7 @@ export default function Product() {
 
         <div className='md:col-span-2 md:w-[30%] mr-10 mt-5'>
           <div className='sticky top-5 hidden md:block md:top-0 w-full'>
-            <BookNow title='Beautiful Apartment' price={item.price} />
+            <BookNow title='Beautiful Apartment' getpost={getpost} index={id}  />
           </div>
         </div>
       </div>

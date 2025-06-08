@@ -1,6 +1,6 @@
 import React from 'react'
 import { data } from './Propertiesdata'
-import imges from '../assest/properties-01.jpg'
+
 import { Link } from 'react-router'
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -34,7 +34,7 @@ export default function Properties() {
                 {data.map((item, index) => (
                     <div key={index} className=' '>
                         <div className='w-full relative z-0 md:w-[320px] h-[320px]'>
-                            <img src={item.img[imageindex[index]]} alt="image" className=' w-full md:w-[320px] h-[320px] ' />
+                            <img src={item.img[imageindex[index]]} alt="title" className=' w-full md:w-[320px] h-[320px] ' />
 
                             <div className='absolute bg-gray-50 rounded-full top-[50%]  right-3 flex items-center justify-center'>
                                 <MdKeyboardArrowRight className='text-3xl' onClick={() => handlernextimage(index)} />
