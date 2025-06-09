@@ -8,6 +8,7 @@ import NAvbar from '../Navbar/NAvbar'
 
 export default function Post() {
     const [image, setBgimage] = useState('')
+    const [video, setVideo] = useState('')
     const [address, setAddress] = useState('')
     const [description, setDescription] = useState('')
     const [rent, setRent] = useState('')
@@ -20,46 +21,60 @@ export default function Post() {
     const [bedroom, setBedroom] = useState();
     const [bathroom, setBathroom] = useState();
     const [floors, setFloors] = useState();
-    const[name,setname]=useState('');
-    const[profile,setprofile]=useState('')
-    const[date,setDate]=useState('');
-    
-    useEffect(()=>{
+    const [name, setname] = useState('');
+    const [profile, setprofile] = useState('')
+    const [date, setDate] = useState('');
+
+    useEffect(() => {
         const today = new Date();
         const formatted =
             String(today.getDate()).padStart(2, '0') + '/' +
             String(today.getMonth() + 1).padStart(2, '0') + '/' +
             today.getFullYear();
-            setDate(formatted)
+        setDate(formatted)
 
     })
     const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file); // Convert to base64
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
+            const reader = new FileReader();
+            reader.readAsDataURL(file); // Convert to base64
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
         });
-      };
-    
-      const handlerbgimage = async (e) => {
+    };
+
+    const handlerbgimage = async (e) => {
         const file = e.target.files[0];
         if (file) {
-          const base64 = await getBase64(file);
-          setBgimage(base64);
+            const base64 = await getBase64(file);
+            setBgimage(base64);
         }
-      };
 
-    
+    };
+    const handlervideo = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const base64 = reader.result;
+                setVideo(base64)
+
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
     const handlerform = (e) => {
         e.preventDefault();
         const getemail = JSON.parse(localStorage.getItem("logindata"))
-        
-        
+
+
         const postdata = {
-            profile:profile,
-            name:name,
-            date:date,
+            id: Date.now(),
+            profile: profile,
+            name: name,
+            date: date,
             image: image,
             address: address,
             description: description,
@@ -96,17 +111,17 @@ export default function Post() {
         toast.success("Sucess add post")
 
     }
-    useEffect(()=>{
+    useEffect(() => {
         const getemail = JSON.parse(localStorage.getItem("logindata"))
-        const getprofiledata=JSON.parse(localStorage.getItem('profiledb'))||[];
-        const checkprofile=getprofiledata.find((data)=>data.userdata.username===getemail)
+        const getprofiledata = JSON.parse(localStorage.getItem('profiledb')) || [];
+        const checkprofile = getprofiledata.find((data) => data.userdata.username === getemail)
 
-        if(checkprofile){
-            setprofile(checkprofile.profileimage );
+        if (checkprofile) {
+            setprofile(checkprofile.profileimage);
             setname(checkprofile.userdata.name)
         }
-    },[])
-    console.log(profile,name)
+    }, [])
+    console.log(profile, name)
 
 
 
@@ -120,8 +135,14 @@ export default function Post() {
                     <div className='w-full px-10 grid sm:grid-cols-2 mt-10 gap-5 sm:gap-3'>
                         <div className='flex gap-3 items-center'>
                             <label className='whitespace-nowrap'>Room Image</label>
-                            <input  type="file" multiple accept="image/*" className="w-full px-2 py-2 border border-black outline-none rounded-md" required onChange={handlerbgimage} />
+                            <input type="file" multiple accept="image/*" className="w-full px-2 py-2 border border-black outline-none rounded-md" required onChange={handlerbgimage} />
                         </div>
+                        <div className=' flex gap-3 items-center'>
+                            <label htmlFor="">Video</label>
+                            <input type="file" accept="video/mp4" className="w-full px-2 py-2 border border-black outline-none rounded-md" required  onChange={handlervideo} />
+                        </div>
+                    </div>
+                    <div className='flex gap-3 items-center mt-5 px-10'>
                         <div className=' flex gap-3 items-center'>
                             <label htmlFor="">Address</label>
                             <input value={address} type='text' className="w-full px-2 py-2 border border-black outline-none rounded-md" required onChange={(e) => setAddress(e.target.value)} />
@@ -197,7 +218,7 @@ export default function Post() {
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
-                                        <option value='more'>More</option>
+                                        <option value='more'>More than 3</option>
                                     </select>
                                 </div>
                                 <div className=' flex gap-3 items-center'>
@@ -207,7 +228,7 @@ export default function Post() {
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
-                                        <option value='more'>More</option>
+                                        <option value='more'>More than 4</option>
                                     </select>
                                 </div>
                                 <div className=' flex gap-3 items-center'>
@@ -217,7 +238,7 @@ export default function Post() {
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
-                                        <option value='more'>More</option>
+                                        <option value='more'>More than 3</option>
                                     </select>
                                 </div>
                                 <div className=' flex gap-3 items-center'>
@@ -227,7 +248,7 @@ export default function Post() {
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
-                                        <option value='more'>More</option>
+                                        <option value='more'>More then 3</option>
                                     </select>
                                 </div>
                             </div>

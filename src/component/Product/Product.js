@@ -1,11 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import NAvbar from '../Navbar/NAvbar'
-import { data } from '../Pages/Propertiesdata';
-import img1 from '../assest/properties-01.jpg'
-import img2 from '../assest/properties-02.jpg'
-import img3 from '../assest/propertis-03.jpg'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import shortvideo from '../assest/Video/video.mp4'
 import { useState } from 'react';
 import { LuBuilding } from "react-icons/lu";
 import { LuLayoutGrid } from "react-icons/lu";
@@ -19,10 +15,10 @@ export default function Product() {
   const { id } = useParams();
   useEffect(() => {
     const fetchpost = JSON.parse(localStorage.getItem("postdb")) || []
-   const index=parseInt(id);
-setGetPost(fetchpost[index])
-  
-  },[id])
+    const index = parseInt(id);
+    setGetPost(fetchpost[index])
+
+  }, [id])
   console.log(getpost)
   // const item = data.find((item) => item.id === id)
 
@@ -45,7 +41,7 @@ setGetPost(fetchpost[index])
   // if (!getpost || !getpost.image || getpost.length === 0) {
   //   return <div className="p-4 text-red-600">Product not found or has no images.</div>;
   // }
-  
+
 
 
   return (
@@ -53,12 +49,16 @@ setGetPost(fetchpost[index])
       <NAvbar />
       <div className='w-full hidden md:flex items-start justify-start'>
         <div className='w-[49.5%] mt-0 text-start'>
-          <img src={getpost.image} alt='' />
+          <img src={getpost.image} alt='' className='w-full  h-[350px] rounded-md' />
         </div>
-        <div className='w-[50%] flex flex-wrap m-auto text-start gap-3'>
+        <div className='w-[50%] h-[350px] flex mt-0  flex-wrap m-auto text-start '>
           {/* {item.img.map((img, i) => (
             <img key={i} src={img} alt='' className='w-[48%] m-auto' />
           ))} */}
+          <video className="w-full h-[100%] rounded-md " autoPlay muted loop controls>
+            <source src={shortvideo} type="video/mp4"  />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
 
@@ -71,9 +71,10 @@ setGetPost(fetchpost[index])
         <div >
           <img src={getpost.image} alt="image" className='flex w-full  ' />
 
+
           {/* <div className='absolute bg-gray-50 rounded-full top-[50%]  right-3 flex items-center justify-center'>
             {/* <MdKeyboardArrowRight className='text-3xl' onClick={handlernextimage} /> */}
-            {/* <MdKeyboardArrowRight className='text-3xl'  /> */}
+          {/* <MdKeyboardArrowRight className='text-3xl'  /> */}
           {/* </div>
           {imageindex > 0 ?
 
@@ -81,7 +82,7 @@ setGetPost(fetchpost[index])
             <div className='absolute bg-gray-50 rounded-full top-[50%]  left-3 flex items-center justify-center'>
               <MdKeyboardArrowLeft className='text-3xl' onClick={handlerprevimage} />
             </div>
-            : ''} */} 
+            : ''} */}
         </div>
         {/* ))} */}
       </div>
@@ -309,7 +310,7 @@ setGetPost(fetchpost[index])
 
         <div className='md:col-span-2 md:w-[30%] mr-10 mt-5'>
           <div className='sticky top-5 hidden md:block md:top-0 w-full'>
-            <BookNow title='Beautiful Apartment' getpost={getpost} index={id}  />
+            <BookNow title='Beautiful Apartment' getpost={getpost} index={id} />
           </div>
         </div>
       </div>

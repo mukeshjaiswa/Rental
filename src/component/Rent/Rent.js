@@ -65,8 +65,8 @@ export default function Rent() {
                             <option selected disabled value=''>  Filter by room </option>
                             <option value='1'>  single room </option>
                             <option value='2'> Double room</option>
-                            <option value='2'> 1Bkh</option>
-                            <option value='3'> 2BKh</option>
+                            <option value='1'> 1Bkh</option>
+                            <option value='2'> 2BKh</option>
 
                         </select>
                     </div>
@@ -93,8 +93,8 @@ export default function Rent() {
                                                 <h1 className='text-sm text-gray-500'>{item.date}</h1>
                                             </div>
                                         </div >
-                                        <div className='mt-0' ><h1 className='text-3xl text-gray-500 font-semibold hover:text-black cursor-pointer'>...</h1>
-                                        </div>
+                                        {/* <div className='mt-0' ><h1 className='text-3xl text-gray-500 font-semibold hover:text-black cursor-pointer'>...</h1> */}
+                                        {/* </div> */}
                                     </div>
                                 </div>
                                 {/* {description} */}

@@ -9,6 +9,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { IoCall } from 'react-icons/io5';
 import { IoMdContact } from 'react-icons/io';
 import { toast } from 'react-toastify';
+import { MdDelete } from "react-icons/md";
 
 
 export default function Profile() {
@@ -53,7 +54,7 @@ export default function Profile() {
     const matchuser = fetchuser.find((useremail) => useremail.username === loginemail);
     if (matchuser) {
       setUserdata(matchuser)
-      console.log(matchuser);
+
     }
   }, [loginemail])
   const addprofile = () => {
@@ -108,7 +109,18 @@ export default function Profile() {
     setPostData(checkemail)
 
   }, [loginemail])
-  console.log(postdata)
+
+  const handlerdelete = (id) => {
+    try {
+      const fetchpostdata = JSON.parse(localStorage.getItem("postdb")) || []
+      const matchdata = fetchpostdata.filter((data) => data.id !== id);
+      localStorage.setItem('postdb', JSON.stringify(matchdata))
+      setPostData(matchdata)
+    } catch (error) {
+      console.log(error)
+    }
+    // console.log(id)
+  }
 
   return (
     <div>
@@ -116,10 +128,10 @@ export default function Profile() {
       <div className='bg-white'>
         {/* {cover section} */}
         <div className=' w-[80%]  relative h-[350px] shadow-md rounded-b-xl bg-gray-100 m-auto hover:bg-gray-200'>
-         
+
           <img src={bgimage || bg1} className='w-full h-full object-center rounded-b-xl ' />
-          
-         
+
+
           <label
             htmlFor='imagefile'
             className='flex cursor-pointer bg-white p-2 gap-2 rounded-lg items-center absolute right-5 bottom-1 z-10'
@@ -203,8 +215,16 @@ export default function Profile() {
                           <h1 className='text-sm text-gray-500'>{item.date}</h1>
                         </div>
                       </div >
-                      <div className='mt-0' ><h1 className='text-3xl text-gray-500 font-semibold hover:text-black cursor-pointer'>...</h1>
+                      <div className='mt-0 relative group' >
+                        <h1 className='text-3xl text-gray-500 font-semibold hover:text-black cursor-pointer text-end'>...</h1>
+                        <div className='w-[200px] absolute -left-20 mt-1 mb-1 hidden group-hover:block  px-5 bg-white shadow-2xl rounded-md  text-black text-xs  py-1 rounded"'>
+                          <div className='flex gap-3 px-5 items-center  text-red-500' onClick={() => handlerdelete(item.id)}>
+                            <MdDelete size={30} />
+                            <h1 className='text-start  text-red-500 cursor-pointer text-xl font-semibold' >Delete </h1>
+                          </div>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                   {/* {description} */}

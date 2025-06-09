@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import NAvbar from '../Navbar/NAvbar'
-import cart1 from '../assest/Cart/cartImage.avif'
+
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router'
 
@@ -79,7 +79,7 @@ export default function Booked() {
                                         </div>
 
                                         <h1 className='text-2xl font-semibold'>Total Rent:Rs. {data.roomprice}</h1>
-                                        <button className='w-full mt-5 bg-blue-600 text-white border py-2 rounded-lg text-md cursor-pointer hover:bg-blue-500' onClick={() => handlerunbooked(data.id)}>unbooked</button>
+                                        <button className='w-full mt-5 bg-blue-600 text-white border py-2 rounded-lg text-md cursor-pointer hover:bg-blue-500' onClick={() => handlerunbooked(data.id)}>Unbooked</button>
                                     </div>
                                 </div>
                             ))}
@@ -90,7 +90,7 @@ export default function Booked() {
 
                     </div>
                 </div>
-                <div className=' sticky top-0  w-[30%]  hidden lg:block border-l   mt-10 px-2'>
+                <div className=' sticky top-0  w-[30%]  hidden lg:block   mt-10 px-2'>
                     <h1 className='text-2xl font-semibold'>Lastest post </h1>
                     {post.slice(0,4).map((item, index) => (
                         <Link to={`/product/${index}`} key={index} className=' cursor-pointer flex mt-5 gap-2 border-b '>
